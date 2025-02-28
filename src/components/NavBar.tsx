@@ -59,6 +59,14 @@ export default function NavBar() {
     // TODO - go to Features
     void navigate("/privacy-policy")
   }
+  const handleLoginfo = () => {
+    void navigate("/login")
+    handleClose()
+  }
+  const handleReg = () => {
+    void navigate("/reigster")
+    handleClose()
+  }
 
   return (
     <AppBar position='static'>
@@ -77,6 +85,9 @@ export default function NavBar() {
           <MenuItem onClick={handleFAQs}>FAQs</MenuItem>
           <MenuItem onClick={handleToS}>Terms of Service</MenuItem>
           <MenuItem onClick={handlePP}>Privacy Policy</MenuItem>
+          <MenuItem onClick={handleLoginfo}>Login</MenuItem>
+          <MenuItem onClick={handleReg}>Register</MenuItem>
+          
         </Menu>
         <Typography
           variant='h6'
