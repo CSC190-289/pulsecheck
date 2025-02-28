@@ -1,4 +1,4 @@
-import { collection, addDoc, Firestore, setDoc, doc } from "firebase/firestore"
+import { setDoc, doc } from "firebase/firestore"
 import { db } from "../services/firebase"
 
 export function AddingUserToRoom(
@@ -20,10 +20,10 @@ export function AddingUserToRoom(
       await setDoc(Rooms, docData)
       callback()
     } catch (error) {
-      console.debug("LOL")
+      console.debug(error)
     }
   }
-  writeUserToRoom()
+  void writeUserToRoom()
 }
 
 /*

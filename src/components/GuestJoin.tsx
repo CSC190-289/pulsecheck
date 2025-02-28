@@ -2,7 +2,7 @@ import { Box, Button, Container, TextField, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { AddingUserToRoom } from "./UserToRoom"
-import { HelpOutline } from "@mui/icons-material"
+//import { HelpOutline } from "@mui/icons-material"
 
 export default function GuestJoin() {
   const navigate = useNavigate()
@@ -24,7 +24,7 @@ export default function GuestJoin() {
   //   }
 
   const handleClickTest = () => {
-    void AddingUserToRoom(displayName, roomCode)
+    // void AddingUserToRoom(displayName, roomCode)
   }
 
   return (
