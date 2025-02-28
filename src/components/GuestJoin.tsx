@@ -1,29 +1,30 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-import {AddingUserToRoom} from "./UserToRoom"
+import { AddingUserToRoom } from "./UserToRoom"
 import { HelpOutline } from "@mui/icons-material"
 
 export default function GuestJoin() {
   const navigate = useNavigate()
-  const [roomCode, setRoomCode] = useState<string>('')
-  const [displayName, setDisplayName] = useState<string>('')
+  const [roomCode, setRoomCode] = useState<string>("")
+  const [displayName, setDisplayName] = useState<string>("")
 
   //Goes to the get started page
   const handleClickL = () => {
-    void AddingUserToRoom(displayName, roomCode, () => {void navigate("/poll-lobby")});
-
+    void AddingUserToRoom(displayName, roomCode, () => {
+      void navigate("/poll-lobby")
+    })
   }
   const handleClickA = () => {
     void navigate("/register")
   }
 
-//   const getInfo = () => {
-// );
-//   }
-  
+  //   const getInfo = () => {
+  // );
+  //   }
+
   const handleClickTest = () => {
-    void AddingUserToRoom(displayName, roomCode);
+    void AddingUserToRoom(displayName, roomCode)
   }
 
   return (

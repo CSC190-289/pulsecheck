@@ -1,33 +1,30 @@
-import { collection, addDoc, Firestore, setDoc, doc} from "firebase/firestore"; 
+import { collection, addDoc, Firestore, setDoc, doc } from "firebase/firestore"
 import { db } from "../services/firebase"
 
-const displayname= "vic";
-const roomCode ="111111"
+export function AddingUserToRoom(
+  displayName: string,
+  roomCode: string,
+  callback: () => void
+) {
+  const Rooms = doc(db, "poll/P7m8QPNrZzi5v29BpjJm")
 
-
-export function AddingUserToRoom (displayName:string,roomCode:string, callback: () => void){
-    
-    const Rooms = doc(db,'poll/P7m8QPNrZzi5v29BpjJm');
-
-    async function writeUserToRoom(){
-        const docData = {
-            DisplayName: displayName,
-            RoomCode: roomCode,
-            points: 15,
-            Email: null,
-            ID: 1101
-        };
-        try{
-            await setDoc(Rooms, docData);
-            callback();
-        } catch (error) {
-            console.debug("LOL");
-        }
+  async function writeUserToRoom() {
+    const docData = {
+      DisplayName: displayName,
+      RoomCode: roomCode,
+      points: 15,
+      Email: null,
+      ID: 1101,
     }
-        writeUserToRoom();
+    try {
+      await setDoc(Rooms, docData)
+      callback()
+    } catch (error) {
+      console.debug("LOL")
+    }
+  }
+  writeUserToRoom()
 }
-
-
 
 /*
 what a user needs 
@@ -47,4 +44,4 @@ what a user needs
         console.log("Error adding document", e);
     }
 
-*/ 
+*/
