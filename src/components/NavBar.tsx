@@ -68,16 +68,6 @@ export default function NavBar() {
     handleClose()
   }
 
-  const handleLoginfo = () => {
-    void navigate("/login")
-    handleClose()
-  }
-
-  const handleReg = () => {
-    void navigate("/register")
-    handleClose()
-  }
-
   return (
     <AppBar position='static'>
       <Toolbar>
