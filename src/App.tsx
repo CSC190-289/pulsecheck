@@ -10,6 +10,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy"
 import TermsOfService from "./pages/TermsOfService"
 import Splash from "./pages/Splash"
 import PollLobby from "./pages/PollLobby"
+import Debug from "./pages/Debug"
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       <NavBar />
       <Routes>
         <Route path='/' element={<Splash />} />
+        <Route path='/debug' element={<Debug />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/get-started' element={<GetStarted />} />
