@@ -1,15 +1,30 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { AddingUserToRoom } from "./UserToRoom"
+//import { HelpOutline } from "@mui/icons-material"
 
 export default function GuestJoin() {
   const navigate = useNavigate()
+  const [roomCode, setRoomCode] = useState<string>("")
+  const [displayName, setDisplayName] = useState<string>("")
 
   //Goes to the get started page
   const handleClickL = () => {
-    void navigate("/poll-lobby")
+    void AddingUserToRoom(displayName, roomCode, () => {
+      void navigate("/poll-lobby")
+    })
   }
   const handleClickA = () => {
     void navigate("/register")
+  }
+
+  //   const getInfo = () => {
+  // );
+  //   }
+
+  const handleClickTest = () => {
+    // void AddingUserToRoom(displayName, roomCode)
   }
 
   return (
@@ -36,12 +51,14 @@ export default function GuestJoin() {
           label='Room Code'
           variant='outlined'
           fullWidth
+          onChange={(e) => setRoomCode(e.target.value)}
         />
         <TextField
           id='guest-name'
           label='Display Name'
           variant='outlined'
           fullWidth
+          onChange={(e) => setDisplayName(e.target.value)}
         />
 
         <Button
@@ -59,6 +76,15 @@ export default function GuestJoin() {
           fullWidth>
           {" "}
           CREATE AN ACCOUNT{" "}
+        </Button>
+
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={handleClickTest}
+          fullWidth>
+          {" "}
+          Testing{" "}
         </Button>
       </Box>
     </Container>
