@@ -1,9 +1,9 @@
-import { Box, Button, Container, Typography } from "@mui/material"
+import { Box, Button, Container, Stack, Typography } from "@mui/material"
 import { useNavigate, useLocation } from "react-router-dom"
-import { useEffect, useRef } from "react"
 import About from "../components/splash/About.tsx"
 import FAQs from "../components/splash/FAQs.tsx"
 import Features from "../components/splash/Features.tsx"
+import { useRef, useEffect } from "react"
 
 interface LocationState {
   scrollTo?: string
@@ -42,7 +42,7 @@ export default function Splash() {
   }, [location])
 
   return (
-    <Container>
+    <Container maxWidth='md'>
       <Box
         sx={{
           display: "flex",
@@ -50,7 +50,6 @@ export default function Splash() {
           alignItems: "center",
           justifyContent: "center",
           textAlign: "center",
-          // marginBottom: 64,
         }}>
         <Typography variant='h4' margin={4} gutterBottom>
           Turning Dead Time into Real-Time Learning!
@@ -69,10 +68,12 @@ export default function Splash() {
           conversation. Instructors get instant feedback, making every session
           more dynamic and alive.
         </Typography>
+        <Stack spacing={8}>
+          <About ref={aboutRef} />
+          <Features ref={featuredRef} />
+          <FAQs ref={faqRef} />
+        </Stack>
       </Box>
-      <About ref={aboutRef} />
-      <FAQs ref={faqRef} />
-      <Features ref={featuredRef} />
     </Container>
   )
 }

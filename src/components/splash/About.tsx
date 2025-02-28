@@ -5,7 +5,9 @@ function About(props: { ref: React.Ref<HTMLDivElement> }) {
   return (
     <div ref={props.ref}>
       <Box textAlign={"left"}>
-        <Typography variant='h5'>About</Typography>
+        <Typography variant='h5' fontWeight={700}>
+          About
+        </Typography>
 
         <Typography variant='h6' sx={{ fontWeight: "bold" }}>
           PulseCheck: Reinventing the Classroom Experience
