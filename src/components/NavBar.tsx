@@ -8,7 +8,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material"
-import { useState } from "react"
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "@/core/api/firebase"
@@ -19,7 +19,7 @@ export default function NavBar() {
   const navigate = useNavigate()
   const [user] = useAuthState(auth)
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const openMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
 
@@ -34,13 +34,11 @@ export default function NavBar() {
   }
 
   const handleAbout = () => {
-    /* TODO - go to about */
     void navigate("/", { state: { scrollTo: "about" } })
     handleClose()
   }
 
   const handleFAQs = () => {
-    /* TODO - go to about */
     void navigate("/", { state: { scrollTo: "faqs" } })
     handleClose()
   }
@@ -50,13 +48,11 @@ export default function NavBar() {
   }
 
   const handleFeatures = () => {
-    // TODO - go to Features
     void navigate("/", { state: { scrollTo: "features" } })
     handleClose()
   }
 
   const handlePP = () => {
-    // TODO - go to Features
     void navigate("/privacy-policy")
   }
   const handleLoginfo = () => {
@@ -68,10 +64,42 @@ export default function NavBar() {
     handleClose()
   }
 
+  const handleDashboard = () => {
+    void navigate("/dashboard")
+    handleClose()
+  }
+
+  const handleJoinPoll = () => {
+    void navigate("/poll/join")
+    handleClose()
+  }
+
+  const handleResults = () => {
+    /* TODO - create route for this endpoint */
+    void navigate("/poll/results")
+    handleClose()
+  }
+
+  const handleProfile = () => {
+    void navigate("/profile")
+    handleClose()
+  }
+
+  const handleLogout = () => {
+    auth
+      .signOut()
+      .then(() => {
+        console.debug("user signed out!")
+        void navigate("/get-started")
+        handleClose()
+      })
+      .catch((err) => console.debug(err))
+  }
+
   return (
     <AppBar position='static'>
       <Toolbar>
-        <IconButton size='large' color='inherit' onClick={handleMenu}>
+        <IconButton size='large' color='inherit' onClick={openMenu}>
           <MenuIcon />
         </IconButton>
         <Menu
@@ -79,14 +107,26 @@ export default function NavBar() {
           keepMounted
           open={Boolean(anchorEl)}
           onClose={handleClose}>
-          <MenuItem onClick={handleHome}>Home</MenuItem>
-          <MenuItem onClick={handleAbout}>About</MenuItem>
-          <MenuItem onClick={handleFeatures}>Features</MenuItem>
-          <MenuItem onClick={handleFAQs}>FAQs</MenuItem>
-          <MenuItem onClick={handleToS}>Terms of Service</MenuItem>
-          <MenuItem onClick={handlePP}>Privacy Policy</MenuItem>
-          <MenuItem onClick={handleLoginfo}>Login</MenuItem>
-          <MenuItem onClick={handleReg}>Register</MenuItem>
+          {user && !user.isAnonymous ? (
+            <Box>
+              <MenuItem onClick={handleDashboard}>Dashboard</MenuItem>
+              <MenuItem onClick={handleJoinPoll}>Join Poll</MenuItem>
+              <MenuItem onClick={handleResults}>Results</MenuItem>
+              <MenuItem onClick={handleProfile}>Profile</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </Box>
+          ) : (
+            <Box>
+              <MenuItem onClick={handleHome}>Home</MenuItem>
+              <MenuItem onClick={handleAbout}>About</MenuItem>
+              <MenuItem onClick={handleFeatures}>Features</MenuItem>
+              <MenuItem onClick={handleFAQs}>FAQs</MenuItem>
+              <MenuItem onClick={handleToS}>Terms of Service</MenuItem>
+              <MenuItem onClick={handlePP}>Privacy Policy</MenuItem>
+              <MenuItem onClick={handleLoginfo}>Login</MenuItem>
+              <MenuItem onClick={handleReg}>Register</MenuItem>
+            </Box>
+          )}
         </Menu>
         <Typography
           variant='h6'
