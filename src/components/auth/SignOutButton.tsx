@@ -2,13 +2,17 @@ import { Button } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { getAuth } from "firebase/auth"
 
-export default function SignOut() {
+export default function SignOutButton() {
   const navigate = useNavigate()
   const auth = getAuth()
 
   const handleSignOut = () => {
-    auth.signOut()
-    navigate("/")
+    auth
+      .signOut()
+      .then(() => {
+        void navigate("/")
+      })
+      .catch((err) => console.debug(err))
   }
   return (
     <Button

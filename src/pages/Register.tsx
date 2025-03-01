@@ -1,12 +1,12 @@
 import { Container, Typography } from "@mui/material"
 import React from "react"
-import SigninWGoogle from "@/components/Authentication/SignInWGoogle"
+import SignInWGoogleButton from "@/components/auth/SignInWGoogleButton"
 export default function Register() {
   return (
     <React.Fragment>
-      <Container>
+      <Container maxWidth='sm'>
         <Typography> Sorry Brando he made me do it</Typography>
-        <SigninWGoogle />
+        <SignInWGoogleButton />
       </Container>
     </React.Fragment>
   )

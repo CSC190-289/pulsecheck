@@ -1,6 +1,6 @@
 import React from "react"
 import { Container, Typography } from "@mui/material"
-import SignOut from "@/components/Authentication/SignOut"
+import SignOutButton from "@/components/auth/SignOutButton"
 
 export default function LoggedInUserHome() {
   return (
@@ -9,7 +9,7 @@ export default function LoggedInUserHome() {
         <Typography variant='h4' gutterBottom>
           Different home page for logged in users
         </Typography>
-        <SignOut />
+        <SignOutButton />
       </Container>
     </React.Fragment>
   )
