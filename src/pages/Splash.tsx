@@ -42,7 +42,7 @@ export default function Splash() {
   }, [location])
 
   return (
-    <Container>
+    <Container maxWidth = "sm">
       <Box
         sx={{
           display: "flex",
