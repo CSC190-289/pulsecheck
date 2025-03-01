@@ -1,31 +1,39 @@
-import { setDoc, doc, collection, updateDoc, addDoc, getDoc, onSnapshot, where, limit, query } from "firebase/firestore"
-import { db } from "../services/firebase"
-
+import {
+  setDoc,
+  doc,
+  collection,
+  addDoc,
+  getDoc,
+  onSnapshot,
+  where,
+  limit,
+  query,
+} from "firebase/firestore"
+import { db } from "@/core/api/firebase"
 
 export function AddingUserToRoom(
   displayName: string,
   roomCode: string,
   callback: () => void
-){
-  
-  const userInfoCollection = collection(db, 'users'); 
+) {
+  const userInfoCollection = collection(db, "users")
   //Add info of users to firebase!
   async function addingUserinfo() {
-    const newDoc = await addDoc(userInfoCollection,{
+    const newDoc = await addDoc(userInfoCollection, {
       DisplayName: displayName,
       RoomCode: roomCode,
     })
     try {
       await addDoc(userInfoCollection, newDoc)
-      callback() 
+      callback()
     } catch (error) {
       console.debug(error)
     }
   }
 
-  addingUserinfo()
-  void usersToLobby()  
- /*
+  void addingUserinfo()
+  void usersToLobby()
+  /*
   const Rooms = doc(db, 'users/uyCAmbuMT34UTRzmXmu4')
 
   async function writeUserToRoom() {
@@ -44,16 +52,15 @@ export function AddingUserToRoom(
   */
 }
 
-
-function usersToLobby(){
-  const userInfoCollection = collection(db, 'users'); 
-  const lobbyRoom = doc(db, 'lobby/P4janotZxKGC7LLPIwls');
+function usersToLobby() {
+  const userInfoCollection = collection(db, "users")
+  const lobbyRoom = doc(db, "lobby/P4janotZxKGC7LLPIwls")
 
   async function lobbyDoc() {
     const docData = {
-      host: 'John Doe',
-      RoomCode: '111111',
-      users: 'd',
+      host: "John Doe",
+      RoomCode: "111111",
+      users: "d",
     }
     try {
       await setDoc(lobbyRoom, docData)
@@ -63,54 +70,41 @@ function usersToLobby(){
   }
   void lobbyDoc()
 
-  
- // function  cancelL
+  // function  cancelL
   //gets lobby if any
-  function queryForLobbyDoc(){
+  function queryForLobbyDoc() {
     const usersLobbyquery = query(
-      collection(db, 'users'),
-      where('Roomcode', '==', '111111'),
-      limit(300),
+      collection(db, "users"),
+      where("Roomcode", "==", "111111"),
+      limit(300)
     )
-    onSnapshot(usersLobbyquery, (querySnapshot) =>{
-      console.log('Document ${snap.id} contains ${JSON.Stringify(snap.data())}')
+    onSnapshot(usersLobbyquery, (querySnapshot) => {
+      console.log("Document ${snap.id} contains ${JSON.Stringify(snap.data())}")
     })
     const querySnapshot = getDocs(usersLobbyquery)
     querySnapshot.forEach((snap) => {
-      console.log('Document ${snap.id} contains ${JSON.Stringify(snap.data())}')
+      console.log("Document ${snap.id} contains ${JSON.Stringify(snap.data())}")
     })
   }
 
   async function lobbycheck() {
     const lobbySnaphot = await getDoc(lobbyRoom)
-    if(lobbySnaphot.exists()){
+    if (lobbySnaphot.exists()) {
       const docData = lobbySnaphot.data()
     }
   }
   async function getUserID() {
-    onSnapshot(userInfoCollection,(doco) => {
-      
-    }
-    )
-
-
+    onSnapshot(userInfoCollection, (doco) => {})
   }
 
-
-
-  function listenToLobby(){
+  function listenToLobby() {
     onSnapshot(lobbyRoom, (docSnapshot) => {
-      if(docSnapshot.exists()){
+      if (docSnapshot.exists()) {
         const docData = docSnapshot.data()
       }
     })
   }
 }
-
-
-
-
-
 
 /*
 export function AddingUserToRoom(
@@ -145,7 +139,6 @@ function queryForLobbyDoc(){
 }
 
 */
-
 
 /*
 export function AddingUserToRoom(

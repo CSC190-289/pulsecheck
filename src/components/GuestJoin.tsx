@@ -1,4 +1,4 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material"
+import { Button, Container, Stack, TextField, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { AddingUserToRoom } from "./UserToRoom"
@@ -40,9 +40,10 @@ export default function GuestJoin() {
         Join Poll
       </Typography>
 
-      <Box
+      <Stack
         component='form'
-        sx={{ "& > :not(style)": { m: 1 } }} // margin for everything in the box
+        sx={{ m: 1 }} // margin for everything in the box
+        spacing={3}
         noValidate
         autoComplete='off'>
         {/*FullWidth allows the button to extend to the xs maxwidth (styles it to match other button that have longer text or shorter)*/}
@@ -67,16 +68,14 @@ export default function GuestJoin() {
           color='primary'
           onClick={handleClickL}
           fullWidth>
-          {" "}
-          POLL UP{" "}
+          POLL UP
         </Button>
         <Button
           variant='contained'
           color='primary'
           onClick={handleClickA}
           fullWidth>
-          {" "}
-          CREATE AN ACCOUNT{" "}
+          CREATE AN ACCOUNT
         </Button>
 
         <Button
@@ -84,10 +83,9 @@ export default function GuestJoin() {
           color='primary'
           onClick={handleClickTest}
           fullWidth>
-          {" "}
-          Testing{" "}
+          Testing
         </Button>
-      </Box>
+      </Stack>
     </Container>
   )
 }
