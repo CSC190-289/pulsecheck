@@ -60,7 +60,7 @@ export default function NavBar() {
     handleClose()
   }
   const handleReg = () => {
-    void navigate("/reigster")
+    void navigate("/register")
     handleClose()
   }
 
@@ -75,7 +75,6 @@ export default function NavBar() {
   }
 
   const handleResults = () => {
-    /* TODO - create route for this endpoint */
     void navigate("/poll/results")
     handleClose()
   }
