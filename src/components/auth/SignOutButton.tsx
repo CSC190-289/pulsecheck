@@ -15,11 +15,7 @@ export default function SignOutButton() {
       .catch((err) => console.debug(err))
   }
   return (
-    <Button
-      variant='outlined'
-      color='primary'
-      sx={{ mb: 1 }}
-      onClick={handleSignOut}>
+    <Button sx={{ mb: 1 }} onClick={handleSignOut}>
       log out
     </Button>
   )

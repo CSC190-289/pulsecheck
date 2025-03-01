@@ -10,7 +10,7 @@ export default function SignInWGoogleButton() {
     signInWithPopup(auth, new GoogleAuthProvider())
       .then((res) => {
         console.debug("res.user.uid", res.user.uid)
-        void navigate("/loggedin-user-home")
+        void navigate("/dashboard")
       })
       .catch((error) => {
         console.debug(error)

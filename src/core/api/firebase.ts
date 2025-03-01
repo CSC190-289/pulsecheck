@@ -12,7 +12,7 @@ const config: FirebaseOptions = {
   storageBucket: "pulsecheck-7cf2b.firebasestorage.app",
 }
 
-export const api = initializeApp(config)
+const api = initializeApp(config)
 
 export const auth = getAuth(api)
 

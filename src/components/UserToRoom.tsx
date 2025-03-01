@@ -1,5 +1,5 @@
 import { setDoc, doc } from "firebase/firestore"
-import { db } from "../services/firebase"
+import { db } from "@/core/api/firebase"
 
 export function AddingUserToRoom(
   displayName: string,
