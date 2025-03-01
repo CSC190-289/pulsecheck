@@ -45,6 +45,7 @@ export default function NavBar() {
 
   const handleToS = () => {
     void navigate("/terms-of-service")
+    handleClose()
   }
 
   const handleFeatures = () => {
@@ -54,6 +55,7 @@ export default function NavBar() {
 
   const handlePP = () => {
     void navigate("/privacy-policy")
+    handleClose()
   }
   const handleLoginfo = () => {
     void navigate("/login")

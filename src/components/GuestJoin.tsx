@@ -15,6 +15,7 @@ export default function GuestJoin() {
       void navigate("/poll-lobby")
     })
   }
+
   const handleClickA = () => {
     void navigate("/register")
   }
