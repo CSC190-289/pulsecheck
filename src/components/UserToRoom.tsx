@@ -1,6 +1,41 @@
-import { setDoc, doc } from "firebase/firestore"
+import { setDoc, doc, collection, updateDoc, addDoc } from "firebase/firestore"
 import { db } from "../services/firebase"
 
+export function AddingUserToRoom(
+  displayName: string,
+  roomCode: string,
+  callback: () => void
+){
+  const userInfo = collection(db, 'users');
+  async function getUserinfo() {
+    const newDoc = await addDoc(userInfo, {
+      DisplayName: displayName,
+      RoomCode: roomCode,
+    });
+    try {
+      await addDoc(userInfo, newDoc)
+      callback() 
+    } catch (error) {
+      console.debug(error)
+    }
+  }
+  void getUserinfo()
+}
+/*
+function queryForLobbyDoc(){
+  const UserOrderQuery = query(
+    collection(db, 'user'),
+    where('drink', '==', 'latte')
+
+  );
+  getDocs(cus)
+
+}
+
+*/
+
+
+/*
 export function AddingUserToRoom(
   displayName: string,
   roomCode: string,
@@ -26,7 +61,7 @@ export function AddingUserToRoom(
   void writeUserToRoom()
 }
 
-/*
+
 what a user needs 
             DisplayName: "John",
             RoomCode: '123456'
