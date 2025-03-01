@@ -64,7 +64,7 @@ export default function NavBar() {
     handleClose()
   }
   const handleReg = () => {
-    void navigate("/reigster")
+    void navigate("/register")
     handleClose()
   }
 
