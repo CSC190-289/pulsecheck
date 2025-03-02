@@ -4,20 +4,23 @@ import React from "react"
 function About(props: { ref: React.Ref<HTMLDivElement> }) {
   return (
     <div ref={props.ref}>
-      <Box>
-        <Typography variant='h6' margin={4} gutterBottom align='left'>
+      <Box textAlign={"left"}>
+        <Typography variant='h5' fontWeight={700}>
           About
         </Typography>
 
-        {/* PLACEHOLDER TEXT, GET RID OF THIS!! */}
-        <Typography variant='subtitle2' margin={4} gutterBottom align='left'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+        <Typography variant='h6' sx={{ fontWeight: "bold" }}>
+          PulseCheck: Reinventing the Classroom Experience
+        </Typography>
+        <Typography variant='subtitle1' gutterBottom>
+          PulseCheck was created to address the challenges of engaging students
+          in large lecture halls. As classrooms grow, keeping students attentive
+          and involved becomes a monumental task. Our goal is to bridge the gap
+          between lecture and participation through interactive, real-time polls
+          and quizzes. Developed by a team of passionate educators and
+          developers, PulseCheck’s mission is to enhance student engagement,
+          provide instructors with instant feedback, and foster a more
+          interactive, personalized learning experience.
         </Typography>
       </Box>
     </div>

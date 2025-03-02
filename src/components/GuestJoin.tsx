@@ -1,15 +1,31 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material"
+import { Button, Container, Stack, TextField, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { AddingUserToRoom } from "./UserToRoom"
+//import { HelpOutline } from "@mui/icons-material"
 
 export default function GuestJoin() {
   const navigate = useNavigate()
+  const [roomCode, setRoomCode] = useState<string>("")
+  const [displayName, setDisplayName] = useState<string>("")
 
   //Goes to the get started page
   const handleClickL = () => {
-    void navigate("/poll-lobby")
+    void AddingUserToRoom(displayName, roomCode, () => {
+      void navigate("/poll-lobby")
+    })
   }
+
   const handleClickA = () => {
     void navigate("/register")
+  }
+
+  //   const getInfo = () => {
+  // );
+  //   }
+
+  const handleClickTest = () => {
+    // void AddingUserToRoom(displayName, roomCode)
   }
 
   return (
@@ -24,9 +40,10 @@ export default function GuestJoin() {
         Join Poll
       </Typography>
 
-      <Box
+      <Stack
         component='form'
-        sx={{ "& > :not(style)": { m: 1 } }} // margin for everything in the box
+        sx={{ m: 1 }} // margin for everything in the box
+        spacing={3}
         noValidate
         autoComplete='off'>
         {/*FullWidth allows the button to extend to the xs maxwidth (styles it to match other button that have longer text or shorter)*/}
@@ -36,12 +53,14 @@ export default function GuestJoin() {
           label='Room Code'
           variant='outlined'
           fullWidth
+          onChange={(e) => setRoomCode(e.target.value)}
         />
         <TextField
           id='guest-name'
           label='Display Name'
           variant='outlined'
           fullWidth
+          onChange={(e) => setDisplayName(e.target.value)}
         />
 
         <Button
@@ -49,18 +68,24 @@ export default function GuestJoin() {
           color='primary'
           onClick={handleClickL}
           fullWidth>
-          {" "}
-          POLL UP{" "}
+          POLL UP
         </Button>
         <Button
           variant='contained'
           color='primary'
           onClick={handleClickA}
           fullWidth>
-          {" "}
-          CREATE AN ACCOUNT{" "}
+          CREATE AN ACCOUNT
         </Button>
-      </Box>
+
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={handleClickTest}
+          fullWidth>
+          Testing
+        </Button>
+      </Stack>
     </Container>
   )
 }
