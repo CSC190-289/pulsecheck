@@ -4,11 +4,13 @@ import {
   collection,
   addDoc,
   getDoc,
+  getDocs,
   onSnapshot,
   where,
   limit,
   query,
-  getDocs,
+  QueryDocumentSnapshot,
+  DocumentData,
 } from "firebase/firestore"
 import { db } from "@/core/api/firebase"
 
@@ -19,13 +21,17 @@ export function AddingUserToRoom(
 ) {
   const userInfoCollection = collection(db, "users")
   //Add info of users to firebase!
+
   async function addingUserinfo() {
-    const newDoc = await addDoc(userInfoCollection, {
-      DisplayName: displayName,
-      RoomCode: roomCode,
-    })
+    // const newDoc = await addDoc(userInfoCollection, {
+    //   DisplayName: displayName,
+    //   RoomCode: roomCode,
+    // })
     try {
-      await addDoc(userInfoCollection, newDoc)
+      await addDoc(userInfoCollection, {
+        DisplayName: displayName,
+        RoomCode: roomCode,
+      })
       callback()
     } catch (error) {
       console.debug(error)
@@ -61,7 +67,7 @@ function usersToLobby() {
     const docData = {
       host: "John Doe",
       RoomCode: "111111",
-      users: "d",
+      users: await queryForLobbyDoc(),
     }
     try {
       await setDoc(lobbyRoom, docData)
@@ -73,19 +79,26 @@ function usersToLobby() {
 
   // function  cancelL
   //gets lobby if any
-  function queryForLobbyDoc() {
+  async function queryForLobbyDoc() {
     const usersLobbyquery = query(
       collection(db, "users"),
-      where("Roomcode", "==", "111111"),
+      where("RoomCode", "==", "111111"),
       limit(300)
     )
     onSnapshot(usersLobbyquery, (querySnapshot) => {
       console.log("Document ${snap.id} contains ${JSON.Stringify(snap.data())}")
     })
-    const querySnapshot = getDocs(usersLobbyquery)
-    querySnapshot.forEach((snap) => {
-      console.log("Document ${snap.id} contains ${JSON.Stringify(snap.data())}")
-    })
+
+    let stringArray: string[] = []
+    const querySnapshot = await getDocs(usersLobbyquery)
+    querySnapshot.forEach(
+      (doc: QueryDocumentSnapshot<DocumentData, DocumentData>) => {
+        stringArray.push(doc.id)
+      }
+    )
+    // const userArray = querySnapshot.docs.map(doc: QueryDocumentSnapshot => ({id: doc.id}))
+    console.debug(stringArray)
+    return stringArray
   }
 
   async function lobbycheck() {
