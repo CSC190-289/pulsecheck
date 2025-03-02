@@ -8,6 +8,7 @@ import {
   where,
   limit,
   query,
+  getDocs,
 } from "firebase/firestore"
 import { db } from "@/core/api/firebase"
 

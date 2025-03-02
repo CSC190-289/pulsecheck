@@ -1,22 +1,55 @@
 import { Button, Container, Stack, TextField, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-import { AddingUserToRoom } from "./UserToRoom"
+import { createUser, findLobbyWithCode, joinLobby } from "@/core/api"
+import { signInAnonymously } from "firebase/auth"
+import { auth } from "@/core/api/firebase"
+import useSnackbar from "@/core/hooks/useSnackbar"
 //import { HelpOutline } from "@mui/icons-material"
 
 export default function GuestJoin() {
   const navigate = useNavigate()
   const [roomCode, setRoomCode] = useState<string>("")
   const [displayName, setDisplayName] = useState<string>("")
+  const snackbar = useSnackbar()
 
-  //Goes to the get started page
-  const handleClickL = () => {
-    void AddingUserToRoom(displayName, roomCode, () => {
-      void navigate("/poll-lobby")
-    })
+  const handleJoinClick = () => {
+    // void AddingUserToRoom(displayName, roomCode, () => {
+    //   void navigate("/poll-lobby")
+    // })
+    const aux = async () => {
+      try {
+        if (!roomCode.trim()) {
+          throw new Error("Room Code cannot be blank!")
+        }
+        if (!displayName.trim()) {
+          throw new Error("Display Name cannot be blank!")
+        }
+        const lobby = await findLobbyWithCode(roomCode)
+        const cred = await signInAnonymously(auth)
+        console.debug("lobby", lobby)
+        console.debug("cred", cred)
+        await createUser(cred.user.uid, displayName)
+        await joinLobby(lobby.id, cred.user.uid)
+        await navigate(`/poll/${lobby.id}/lobby`)
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          snackbar.show({
+            message: err.message,
+            type: "error",
+          })
+        } else {
+          snackbar.show({
+            message: "An unexpected error occured.",
+            type: "error",
+          })
+        }
+      }
+    }
+    void aux()
   }
 
-  const handleClickA = () => {
+  const handleCreateAccount = () => {
     void navigate("/register")
   }
 
@@ -24,9 +57,9 @@ export default function GuestJoin() {
   // );
   //   }
 
-  const handleClickTest = () => {
-    // void AddingUserToRoom(displayName, roomCode)
-  }
+  // const handleClickTest = () => {
+  // void AddingUserToRoom(displayName, roomCode)
+  // }
 
   return (
     <Container
@@ -62,29 +95,27 @@ export default function GuestJoin() {
           fullWidth
           onChange={(e) => setDisplayName(e.target.value)}
         />
-
         <Button
           variant='contained'
           color='primary'
-          onClick={handleClickL}
+          onClick={handleJoinClick}
           fullWidth>
           POLL UP
         </Button>
         <Button
           variant='contained'
           color='primary'
-          onClick={handleClickA}
+          onClick={handleCreateAccount}
           fullWidth>
           CREATE AN ACCOUNT
         </Button>
-
-        <Button
+        {/* <Button
           variant='contained'
           color='primary'
           onClick={handleClickTest}
           fullWidth>
           Testing
-        </Button>
+        </Button> */}
       </Stack>
     </Container>
   )

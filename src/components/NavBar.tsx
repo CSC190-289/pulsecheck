@@ -137,7 +137,7 @@ export default function NavBar() {
           PulseCheck
         </Typography>
         <Box flexGrow={1} />
-        {user && <ProfileBadge />}
+        {user && !user.isAnonymous && <ProfileBadge />}
       </Toolbar>
     </AppBar>
   )
