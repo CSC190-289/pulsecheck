@@ -1,9 +1,10 @@
+/* eslint-disable no-shadow */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   setDoc,
   doc,
   collection,
   addDoc,
-  getDoc,
   getDocs,
   onSnapshot,
   where,
@@ -60,7 +61,7 @@ export function AddingUserToRoom(
 }
 
 function usersToLobby() {
-  const userInfoCollection = collection(db, "users")
+  // const userInfoCollection = collection(db, "users")
   const lobbyRoom = doc(db, "lobby/P4janotZxKGC7LLPIwls")
 
   async function lobbyDoc() {
@@ -85,11 +86,13 @@ function usersToLobby() {
       where("RoomCode", "==", "111111"),
       limit(300)
     )
-    onSnapshot(usersLobbyquery, (querySnapshot) => {
-      console.log("Document ${snap.id} contains ${JSON.Stringify(snap.data())}")
+    onSnapshot(usersLobbyquery, (_querySnapshot) => {
+      console.debug(
+        "Document ${snap.id} contains ${JSON.Stringify(snap.data())}"
+      )
     })
 
-    let stringArray: string[] = []
+    const stringArray: string[] = []
     const querySnapshot = await getDocs(usersLobbyquery)
     querySnapshot.forEach(
       (doc: QueryDocumentSnapshot<DocumentData, DocumentData>) => {
@@ -101,23 +104,23 @@ function usersToLobby() {
     return stringArray
   }
 
-  async function lobbycheck() {
-    const lobbySnaphot = await getDoc(lobbyRoom)
-    if (lobbySnaphot.exists()) {
-      const docData = lobbySnaphot.data()
-    }
-  }
-  async function getUserID() {
-    onSnapshot(userInfoCollection, (doco) => {})
-  }
+  // async function lobbycheck() {
+  //   const lobbySnaphot = await getDoc(lobbyRoom)
+  //   if (lobbySnaphot.exists()) {
+  //     const docData = lobbySnaphot.data()
+  //   }
+  // }
+  // function getUserID() {
+  //   onSnapshot(userInfoCollection, (_doco) => {})
+  // }
 
-  function listenToLobby() {
-    onSnapshot(lobbyRoom, (docSnapshot) => {
-      if (docSnapshot.exists()) {
-        const docData = docSnapshot.data()
-      }
-    })
-  }
+  // function listenToLobby() {
+  //   onSnapshot(lobbyRoom, (docSnapshot) => {
+  //     if (docSnapshot.exists()) {
+  //       const docData = docSnapshot.data()
+  //     }
+  //   })
+  // }
 }
 
 /*

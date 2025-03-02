@@ -6,7 +6,6 @@ import {
   Box,
   Grid2,
   Toolbar,
-  Button,
 } from "@mui/material"
 import { doc, DocumentReference } from "firebase/firestore"
 import { useParams } from "react-router-dom"
