@@ -1,4 +1,4 @@
-import { db } from "@/core/api/firebase"
+import { auth, db } from "@/core/api/firebase"
 import {
   Typography,
   Container,
@@ -6,19 +6,25 @@ import {
   Box,
   Grid2,
   Toolbar,
+  Button,
 } from "@mui/material"
-import { doc, DocumentReference } from "firebase/firestore"
-import { useParams } from "react-router-dom"
+import { arrayRemove, doc, DocumentReference, updateDoc } from "firebase/firestore"
+import { useNavigate, useParams } from "react-router-dom"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import React from "react"
 import { Lobby } from "@/core/types"
 import LobbiestCard from "@/components/lobby/LobbiestCard"
+import { useAuthState } from "react-firebase-hooks/auth"
+import useSnackbar from "@/core/hooks/useSnackbar"
 
 export default function PollLobby() {
   const params = useParams()
   const lobbyId = params.id ?? "null"
   const ref = doc(db, "lobby", lobbyId) as DocumentReference<Lobby>
   const [lobby, loading, error] = useDocumentData<Lobby>(ref)
+  const [user] = useAuthState(auth)
+  const snackbar = useSnackbar()
+  const navigate = useNavigate()
 
   console.debug("PollLobby.lobby", lobby)
   console.debug("PollLobby.loading", loading)
@@ -52,6 +58,30 @@ export default function PollLobby() {
     )
   }
 
+  async function handleLeave() {
+    if (!user) {
+      return
+    }
+    const docRef = doc(db, "lobby", lobbyId)
+    try {
+      await updateDoc(docRef, {
+        users: arrayRemove(user.uid),
+      })
+      snackbar.show({
+        message: `You left the lobby`,
+        type: "info",
+      })
+      if (user.isAnonymous) {
+        void navigate("/")
+      } else {
+        void navigate(-1)
+      }
+      console.debug(`User ${user.uid} removed successfully`)
+    } catch (err) {
+      console.debug("Error removing user:", err)
+    }
+  }
+
   return (
     <React.Fragment>
       <Toolbar
@@ -59,7 +89,9 @@ export default function PollLobby() {
           justifyContent: "center",
           boxShadow: "2px 2px rgba(0,0,0,0.1)",
         }}>
-        <Box>
+        <Button onClick={handleLeave}>Leave</Button>
+        <Box flexGrow={1} />
+        <Box position={"absolute"}>
           <Typography variant='h6'>Poll Title Goes Here</Typography>
           <Typography>{plbl(lobby.users.length)}</Typography>
         </Box>
