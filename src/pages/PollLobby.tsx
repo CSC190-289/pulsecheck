@@ -8,7 +8,12 @@ import {
   Toolbar,
   Button,
 } from "@mui/material"
-import { arrayRemove, doc, DocumentReference, updateDoc } from "firebase/firestore"
+import {
+  arrayRemove,
+  doc,
+  DocumentReference,
+  updateDoc,
+} from "firebase/firestore"
 import { useNavigate, useParams } from "react-router-dom"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import React from "react"
@@ -58,28 +63,31 @@ export default function PollLobby() {
     )
   }
 
-  async function handleLeave() {
-    if (!user) {
-      return
-    }
-    const docRef = doc(db, "lobby", lobbyId)
-    try {
-      await updateDoc(docRef, {
-        users: arrayRemove(user.uid),
-      })
-      snackbar.show({
-        message: `You left the lobby`,
-        type: "info",
-      })
-      if (user.isAnonymous) {
-        void navigate("/")
-      } else {
-        void navigate(-1)
+  function handleLeave() {
+    async function aux() {
+      if (!user) {
+        return
       }
-      console.debug(`User ${user.uid} removed successfully`)
-    } catch (err) {
-      console.debug("Error removing user:", err)
+      const docRef = doc(db, "lobby", lobbyId)
+      try {
+        await updateDoc(docRef, {
+          users: arrayRemove(user.uid),
+        })
+        snackbar.show({
+          message: `You left the lobby`,
+          type: "info",
+        })
+        if (user.isAnonymous) {
+          void navigate("/")
+        } else {
+          void navigate(-1)
+        }
+        console.debug(`User ${user.uid} removed successfully`)
+      } catch (err) {
+        console.debug("Error removing user:", err)
+      }
     }
+    void aux()
   }
 
   return (
