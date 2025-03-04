@@ -5,8 +5,10 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Slide,
   Toolbar,
   Typography,
+  useScrollTrigger,
 } from "@mui/material"
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -33,57 +35,119 @@ export default function NavBar() {
     handleClose()
   }
 
+  return (
+    <HideOnScroll>
+      <AppBar position='sticky'>
+        <Toolbar>
+          <IconButton size='large' color='inherit' onClick={openMenu}>
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}>
+            {user && !user.isAnonymous ? (
+              <AuthMenuItems callback={handleClose} />
+            ) : (
+              <GuestMenuItems callback={handleClose} />
+            )}
+          </Menu>
+          <Typography
+            variant='h6'
+            component={"div"}
+            onClick={handleHome}
+            sx={{ cursor: "pointer" }}>
+            PulseCheck
+          </Typography>
+          <Box flexGrow={1} />
+          {user && !user.isAnonymous && <ProfileBadge />}
+        </Toolbar>
+      </AppBar>
+    </HideOnScroll>
+  )
+}
+
+interface CallbackProps {
+  callback: () => void
+}
+
+function GuestMenuItems({ callback }: CallbackProps) {
+  const navigate = useNavigate()
+
+  const handleHome = () => {
+    void navigate("/")
+    callback()
+  }
+
   const handleAbout = () => {
     void navigate("/", { state: { scrollTo: "about" } })
-    handleClose()
+    callback()
   }
 
   const handleFAQs = () => {
     void navigate("/", { state: { scrollTo: "faqs" } })
-    handleClose()
+    callback()
   }
 
   const handleToS = () => {
     void navigate("/terms-of-service")
-    handleClose()
+    callback()
   }
 
   const handleFeatures = () => {
     void navigate("/", { state: { scrollTo: "features" } })
-    handleClose()
+    callback()
   }
 
   const handlePP = () => {
     void navigate("/privacy-policy")
-    handleClose()
+    callback()
   }
   const handleLoginfo = () => {
     void navigate("/login")
-    handleClose()
+    callback()
   }
   const handleReg = () => {
     void navigate("/register")
-    handleClose()
+    callback()
   }
+
+  return (
+    <Box>
+      <MenuItem onClick={handleHome}>Home</MenuItem>
+      <MenuItem onClick={handleAbout}>About</MenuItem>
+      <MenuItem onClick={handleFeatures}>Features</MenuItem>
+      <MenuItem onClick={handleFAQs}>FAQs</MenuItem>
+      <MenuItem onClick={handleToS}>Terms of Service</MenuItem>
+      <MenuItem onClick={handlePP}>Privacy Policy</MenuItem>
+      <MenuItem onClick={handleLoginfo}>Login</MenuItem>
+      <MenuItem onClick={handleReg}>Register</MenuItem>
+    </Box>
+  )
+}
+
+function AuthMenuItems({ callback }: CallbackProps) {
+  const navigate = useNavigate()
 
   const handleDashboard = () => {
     void navigate("/dashboard")
-    handleClose()
+    callback()
   }
 
   const handleJoinPoll = () => {
     void navigate("/poll/join")
-    handleClose()
+    callback()
   }
 
   const handleResults = () => {
     void navigate("/poll/results")
-    handleClose()
+    callback()
   }
 
   const handleProfile = () => {
     void navigate("/profile")
-    handleClose()
+    callback()
   }
 
   const handleLogout = () => {
@@ -92,53 +156,34 @@ export default function NavBar() {
       .then(() => {
         console.debug("user signed out!")
         void navigate("/get-started")
-        handleClose()
+        callback()
       })
       .catch((err) => console.debug(err))
   }
 
   return (
-    <AppBar position='static'>
-      <Toolbar>
-        <IconButton size='large' color='inherit' onClick={openMenu}>
-          <MenuIcon />
-        </IconButton>
-        <Menu
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}>
-          {user && !user.isAnonymous ? (
-            <Box>
-              <MenuItem onClick={handleDashboard}>Dashboard</MenuItem>
-              <MenuItem onClick={handleJoinPoll}>Join Poll</MenuItem>
-              <MenuItem onClick={handleResults}>Results</MenuItem>
-              <MenuItem onClick={handleProfile}>Profile</MenuItem>
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
-            </Box>
-          ) : (
-            <Box>
-              <MenuItem onClick={handleHome}>Home</MenuItem>
-              <MenuItem onClick={handleAbout}>About</MenuItem>
-              <MenuItem onClick={handleFeatures}>Features</MenuItem>
-              <MenuItem onClick={handleFAQs}>FAQs</MenuItem>
-              <MenuItem onClick={handleToS}>Terms of Service</MenuItem>
-              <MenuItem onClick={handlePP}>Privacy Policy</MenuItem>
-              <MenuItem onClick={handleLoginfo}>Login</MenuItem>
-              <MenuItem onClick={handleReg}>Register</MenuItem>
-            </Box>
-          )}
-        </Menu>
-        <Typography
-          variant='h6'
-          component={"div"}
-          onClick={handleHome}
-          sx={{ cursor: "pointer" }}>
-          PulseCheck
-        </Typography>
-        <Box flexGrow={1} />
-        {user && !user.isAnonymous && <ProfileBadge />}
-      </Toolbar>
-    </AppBar>
+    <Box>
+      <MenuItem onClick={handleDashboard}>Dashboard</MenuItem>
+      <MenuItem onClick={handleJoinPoll}>Join Poll</MenuItem>
+      <MenuItem onClick={handleResults}>Results</MenuItem>
+      <MenuItem onClick={handleProfile}>Profile</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+    </Box>
+  )
+}
+interface HideOnScrollProps {
+  children: React.ReactElement
+}
+
+function HideOnScroll({ children }: HideOnScrollProps) {
+  const trigger = useScrollTrigger({ threshold: 50 })
+  return (
+    <Slide
+      appear={false}
+      direction='down'
+      in={!trigger}
+      timeout={{ enter: 500, exit: 300 }}>
+      {children}
+    </Slide>
   )
 }
