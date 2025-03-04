@@ -1,58 +1,66 @@
-import { Box, Typography } from "@mui/material"
+import { Box, Stack, Typography } from "@mui/material"
 import Accordion from "@mui/material/Accordion"
 import AccordionSummary from "@mui/material/AccordionSummary"
 import AccordionDetails from "@mui/material/AccordionDetails"
 import React from "react"
+import { RA } from "@/styles"
 
-function FAQs(props: { ref: React.Ref<HTMLDivElement> }) {
+function FAQs(props: { ref?: React.Ref<unknown> }) {
   return (
-    <div ref={props.ref}>
-      <Box textAlign={"left"}>
-        <Typography variant='h5' fontWeight={700}>
+    <Box ref={props.ref}>
+      <RA.Bounce triggerOnce>
+        <Typography variant='h5' textAlign={"center"} fontWeight={700} mb={2}>
           FAQs
         </Typography>
-        <Accordion sx={{ marginBottom: 2 }}>
-          <AccordionSummary sx={{ fontWeight: "Bold" }}>
-            Q: How do I participate in a quiz or poll?
-          </AccordionSummary>
-          <AccordionDetails>
-            A: Simply log in to the PulseCheck platform on your device and join
-            the session using the provided quiz or poll link from your
-            instructor.
-          </AccordionDetails>
-        </Accordion>
-
-        <Accordion sx={{ marginBottom: 2 }}>
-          <AccordionSummary sx={{ fontWeight: "Bold" }}>
-            Q: Can I access my quiz results?
-          </AccordionSummary>
-          <AccordionDetails>
-            A: Yes! After completing a quiz, you can view your results and see
-            which questions you answered correctly or incorrectly.
-          </AccordionDetails>
-        </Accordion>
-
-        <Accordion sx={{ marginBottom: 2 }}>
-          <AccordionSummary sx={{ fontWeight: "Bold" }}>
-            Q: How does PulseCheck track attendance?
-          </AccordionSummary>
-          <AccordionDetails>
-            A: PulseCheck tracks attendance based on your participation in live
-            polls and quizzes during lectures.
-          </AccordionDetails>
-        </Accordion>
-
-        <Accordion sx={{ marginBottom: 2 }}>
-          <AccordionSummary sx={{ fontWeight: "Bold" }}>
-            Q: Can I use PulseCheck on my phone?
-          </AccordionSummary>
-          <AccordionDetails>
-            A: Absolutely! PulseCheck is fully responsive and works seamlessly
-            mobile devices.
-          </AccordionDetails>
-        </Accordion>
-      </Box>
-    </div>
+      </RA.Bounce>
+      <Stack spacing={4}>
+        <RA.Bounce triggerOnce>
+          <Accordion expanded>
+            <AccordionSummary>
+              <b>Q: How do I participate in a quiz or poll?</b>
+            </AccordionSummary>
+            <AccordionDetails>
+              <b>A:</b> Simply log in to the PulseCheck platform on your device
+              and join the session using the provided quiz or poll link from
+              your instructor.
+            </AccordionDetails>
+          </Accordion>
+        </RA.Bounce>
+        <RA.Bounce triggerOnce>
+          <Accordion expanded>
+            <AccordionSummary>
+              <b>Q: Can I access my quiz results?</b>
+            </AccordionSummary>
+            <AccordionDetails>
+              <b>A:</b> Yes! After completing a quiz, you can view your results
+              and see which questions you answered correctly or incorrectly.
+            </AccordionDetails>
+          </Accordion>
+        </RA.Bounce>
+        <RA.Bounce triggerOnce>
+          <Accordion expanded>
+            <AccordionSummary>
+              <b>Q: How does PulseCheck track attendance?</b>
+            </AccordionSummary>
+            <AccordionDetails>
+              <b>A:</b> PulseCheck tracks attendance based on your participation
+              in live polls and quizzes during lectures.
+            </AccordionDetails>
+          </Accordion>
+        </RA.Bounce>
+        <RA.Bounce triggerOnce>
+          <Accordion expanded>
+            <AccordionSummary>
+              <b>Q: Can I use PulseCheck on my phone?</b>
+            </AccordionSummary>
+            <AccordionDetails>
+              <b>A:</b> Absolutely! PulseCheck is fully responsive and works
+              seamlessly mobile devices.
+            </AccordionDetails>
+          </Accordion>
+        </RA.Bounce>
+      </Stack>
+    </Box>
   )
 }
 

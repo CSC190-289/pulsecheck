@@ -7,6 +7,7 @@ import {
   Grid2,
   Toolbar,
   Button,
+  // Fab,
 } from "@mui/material"
 import {
   arrayRemove,
@@ -21,6 +22,9 @@ import { Lobby } from "@/core/types"
 import LobbiestCard from "@/components/lobby/LobbiestCard"
 import { useAuthState } from "react-firebase-hooks/auth"
 import useSnackbar from "@/core/hooks/useSnackbar"
+import { RA } from "@/styles"
+// import { Message } from "@mui/icons-material"
+// import useSnackbar from "@/core/hooks/useSnackbar"
 
 export default function PollLobby() {
   const params = useParams()
@@ -33,7 +37,7 @@ export default function PollLobby() {
 
   console.debug("PollLobby.lobby", lobby)
   console.debug("PollLobby.loading", loading)
-  console.debug("PollLobby.error", error)
+  // const snackbar = useSnackbar()
 
   if (error) {
     return (
@@ -101,23 +105,33 @@ export default function PollLobby() {
         <Box flexGrow={1} />
         <Box position={"absolute"}>
           <Typography variant='h6'>Poll Title Goes Here</Typography>
-          <Typography>{plbl(lobby.users.length)}</Typography>
+          <Typography>{itops(lobby.users.length || 0)}</Typography>
         </Box>
       </Toolbar>
       <Container sx={{ mt: 2 }}>
         <Grid2 container spacing={2}>
-          {lobby.users.map((x) => (
+          {lobby?.users.map((x) => (
             <Grid2 key={x} size={{ lg: 3, md: 4, sm: 6, xs: 12 }}>
-              <LobbiestCard userId={x} />
+              <RA.Zoom triggerOnce>
+                <LobbiestCard userId={x} />
+              </RA.Zoom>
             </Grid2>
           ))}
         </Grid2>
+        {/* <Fab
+          color='primary'
+          onClick={() =>
+            snackbar.show({ type: "error", message: "Not Yet Implemented" })
+          }
+          sx={{ position: "absolute", bottom: 0, right: 0, mr: 2, mb: 2 }}>
+          <Message />
+        </Fab> */}
       </Container>
     </React.Fragment>
   )
 }
 
-function plbl(size: number) {
+function itops(size: number) {
   if (size > 1) {
     return `${size} Participants`
   }
