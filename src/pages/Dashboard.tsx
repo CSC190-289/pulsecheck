@@ -1,14 +1,23 @@
 import SignOutButton from "@/components/auth/SignOutButton"
 import { useNavigate } from "react-router-dom"
 import {Button, Container, Typography, Stack } from "@mui/material"
+import {doc, collection, addDoc, setDoc } from "firebase/firestore"
+import { db } from "@/core/api/firebase"
+//import { useAuthState } from 'react-firebase-hooks/auth';
 
 export default function Dashboard() {
 
   const navigate = useNavigate();
 
-  const handleCreatePoll = () => {
-    
-    void navigate("/poll/:id/edit");
+  const handleCreatePoll = async () => {
+    console.debug("Adding doc...")
+    const host = "J5aYAqwWUghq56Zf7GAfI8TEaMk1";
+    const pollsCollection = collection(db, "poll");
+    const pollDocRef = await addDoc(pollsCollection, {
+      owner: host,
+      questions: "" 
+    });
+    void navigate(`/poll/${pollDocRef.id}/edit`);
   }
   const handleUserJoin = () => {
     void navigate("/poll/join")
@@ -21,11 +30,8 @@ export default function Dashboard() {
         Different home page for logged in users
       </Typography>
       <Stack
-              component='form'
               sx={{ m: 1 }} // margin for everything in the box
-              spacing={3}
-              noValidate
-              autoComplete='off'>
+              spacing={3}>
       <Button
           variant='contained'
           color='primary'

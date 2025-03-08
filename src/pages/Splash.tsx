@@ -72,7 +72,7 @@ export default function Splash() {
               every session more dynamic and alive.
             </Typography>
           </RA.Bounce>
-          <About ref={aboutRef} />
+          <About ref={aboutRef} />              
           <Container>
             <ExpandCircleDown />
           </Container>
