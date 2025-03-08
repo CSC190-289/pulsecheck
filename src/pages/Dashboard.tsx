@@ -56,7 +56,7 @@ export default function Dashboard() {
           </Button>
           <SignOutButton />
         </Stack>
-        <Stack sx={{ m: 1 }} spacing={3} gutterBottom>
+        <Stack sx={{ m: 1 }} spacing={3}>
           <Typography variant='h6' align='left'>
             Recent Polls
           </Typography>
